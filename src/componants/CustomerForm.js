@@ -1,3 +1,4 @@
+import { Button, Card, FormLabel, Input } from "@mui/material";
 import React, { useState } from "react";
 
 function CustomerForm() {
@@ -32,7 +33,6 @@ function CustomerForm() {
       .then((response) => response.json())
       .then((data) => {
         console.log("Successfully posted data:", data);
-        // Optionally, reset the form or update the UI
         setFormData({
           firstName: "",
           lastName: "",
@@ -48,89 +48,99 @@ function CustomerForm() {
   };
 
   return (
-    <form onSubmit={handleSubmit}>
-      <div>
-        <label>First Name:</label>
-        <input
-          type="text"
-          name="firstName"
-          value={formData.firstName}
-          onChange={handleChange}
-          required
-        />
-      </div>
-      <div>
-        <label>Last Name:</label>
-        <input
-          type="text"
-          name="lastName"
-          value={formData.lastName}
-          onChange={handleChange}
-          required
-        />
-      </div>
-      <div>
-        <label>OIB:</label>
-        <input
-          type="text"
-          name="oib"
-          value={formData.oib}
-          onChange={handleChange}
-          required
-        />
-      </div>
-      <div>
-        <label>City:</label>
-        <input
-          type="text"
-          name="city"
-          value={formData.city}
-          onChange={handleChange}
-          required
-        />
-      </div>
-      <div>
-        <label>Street:</label>
-        <input
-          type="text"
-          name="street"
-          value={formData.street}
-          onChange={handleChange}
-          required
-        />
-      </div>
-      <div>
-        <label>Street Number:</label>
-        <input
-          type="text"
-          name="streetNumber"
-          value={formData.streetNumber}
-          onChange={handleChange}
-          required
-        />
-      </div>
-      <div>
-        <label>Zip Code:</label>
-        <input
-          type="text"
-          name="zipCode"
-          value={formData.zipCode}
-          onChange={handleChange}
-          required
-        />
-      </div>
-      <div>
-        <label>Country:</label>
-        <input
-          type="text"
-          name="country"
-          value={formData.country}
-          onChange={handleChange}
-          required
-        />
-      </div>
-      <button type="submit">Add Customer</button>
-    </form>
+    <Card sx={{ maxWidth: 600, margin: "0 auto", padding: 2 }}>
+      <form onSubmit={handleSubmit}>
+        <div>
+          <FormLabel>First Name:</FormLabel>
+          <Input
+            type="text"
+            name="firstName"
+            value={formData.firstName}
+            onChange={handleChange}
+            required
+          />
+        </div>
+        <div>
+          <FormLabel>Last Name:</FormLabel>
+          <Input
+            type="text"
+            name="lastName"
+            value={formData.lastName}
+            onChange={handleChange}
+            required
+          />
+        </div>
+        <div>
+          <FormLabel>OIB:</FormLabel>
+          <Input
+            type="text"
+            name="oib"
+            value={formData.oib}
+            onChange={handleChange}
+            required
+          />
+        </div>
+        <div>
+          <FormLabel>City:</FormLabel>
+          <Input
+            type="text"
+            name="city"
+            value={formData.city}
+            onChange={handleChange}
+            required
+          />
+        </div>
+        <div>
+          <FormLabel>Street:</FormLabel>
+          <Input
+            type="text"
+            name="street"
+            value={formData.street}
+            onChange={handleChange}
+            required
+          />
+        </div>
+        <div>
+          <FormLabel>Street Number:</FormLabel>
+          <Input
+            type="text"
+            name="streetNumber"
+            value={formData.streetNumber}
+            onChange={handleChange}
+            required
+          />
+        </div>
+        <div>
+          <FormLabel>Zip Code:</FormLabel>
+          <Input
+            type="text"
+            name="zipCode"
+            value={formData.zipCode}
+            onChange={handleChange}
+            required
+          />
+        </div>
+        <div>
+          <FormLabel>Country:</FormLabel>
+          <Input
+            type="text"
+            name="country"
+            value={formData.country}
+            onChange={handleChange}
+            required
+          />
+        </div>
+        <div
+          style={{
+            display: "flex",
+            justifyContent: "flex-end",
+            marginTop: "16px",
+          }}
+        >
+          <Button type="submit">Add Customer</Button>
+        </div>
+      </form>
+    </Card>
   );
 }
 
