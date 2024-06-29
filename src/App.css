@@ -35,3 +35,18 @@ body {
   color: white;
   text-align: center;
 }
+
+.nav-links {
+  display: flex;
+  list-style-type: none;
+  padding: 0;
+}
+
+.nav-links li {
+  margin-right: 10px;
+}
+
+.nav-links a {
+  text-decoration: none;
+  color: white; /* Change color to white */
+}
