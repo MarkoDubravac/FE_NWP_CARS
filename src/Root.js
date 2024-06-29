@@ -1,7 +1,7 @@
 import React from "react";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
-import App from "./App";
-import CustomerList from "./CustomerList";
+import App from "./componants/App";
+import CustomerList from "./componants/CustomerList";
 
 function Root() {
   return (
