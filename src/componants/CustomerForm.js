@@ -114,7 +114,6 @@ function CustomerForm({ initialData }) {
           <Input
             type="text"
             name="firstName"
-            placeholder="Pero"
             value={formData.firstName}
             onChange={handleChange}
             required
@@ -125,7 +124,6 @@ function CustomerForm({ initialData }) {
           <Input
             type="text"
             name="lastName"
-            placeholder="Peric"
             value={formData.lastName}
             onChange={handleChange}
             required
@@ -136,7 +134,7 @@ function CustomerForm({ initialData }) {
           <Input
             type="text"
             name="oib"
-            placeholder="Your OIB"
+            placeholder="Exactly 11 numbers"
             value={formData.oib}
             onChange={handleChange}
             required
@@ -147,7 +145,6 @@ function CustomerForm({ initialData }) {
           <Input
             type="text"
             name="city"
-            placeholder="Osijek"
             value={formData.city}
             onChange={handleChange}
             required
@@ -158,7 +155,6 @@ function CustomerForm({ initialData }) {
           <Input
             type="text"
             name="street"
-            placeholder="Petra Krezme"
             value={formData.street}
             onChange={handleChange}
             required
@@ -169,7 +165,6 @@ function CustomerForm({ initialData }) {
           <Input
             type="text"
             name="streetNumber"
-            placeholder="37"
             value={formData.streetNumber}
             onChange={handleChange}
             required
@@ -180,7 +175,6 @@ function CustomerForm({ initialData }) {
           <Input
             type="text"
             name="zipCode"
-            placeholder="31000"
             value={formData.zipCode}
             onChange={handleChange}
             required
@@ -191,7 +185,6 @@ function CustomerForm({ initialData }) {
           <Input
             type="text"
             name="country"
-            placeholder="Hrvatska"
             value={formData.country}
             onChange={handleChange}
             required

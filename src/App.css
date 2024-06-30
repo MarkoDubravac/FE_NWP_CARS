@@ -112,6 +112,20 @@ button {
   margin-left: auto;
 }
 
+.container {
+  max-width: 600px;
+  margin: 0 auto;
+  padding: 16px;
+}
+
+.form-section {
+  margin-bottom: 32px;
+}
+
+.form-section h5 {
+  margin-bottom: 16px;
+}
+
 .car-card {
   display: flex;
   align-items: center;
