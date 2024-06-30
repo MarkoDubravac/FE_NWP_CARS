@@ -140,7 +140,7 @@ function Customer({ id }) {
           </Typography>
           <List>
             {user.cars.map((car, index) => (
-              <div>
+              <div key={index}>
                 <Card className="car-card">
                   <li className="car-card-item">
                     <img src={carImage} alt="car" className="car-icon" />
@@ -150,18 +150,20 @@ function Customer({ id }) {
                     </p>
                     <div className="car-service">
                       <FormControl fullWidth>
-                        <InputLabel id="demo-simple-select-label">
+                        <InputLabel id={`services-label-${index}`}>
                           Services
                         </InputLabel>
                         <Select
-                          labelId="demo-simple-select-label"
-                          id="demo-simple-select"
-                          value={1}
+                          labelId={`services-label-${index}`}
+                          id={`services-select-${index}`}
+                          value=""
                           label="Services"
                         >
-                          <MenuItem value={10}>Ten</MenuItem>
-                          <MenuItem value={20}>Twenty</MenuItem>
-                          <MenuItem value={30}>Thirty</MenuItem>
+                          {car.services.map((service, serviceIndex) => (
+                            <MenuItem key={serviceIndex} value={service}>
+                              {service}
+                            </MenuItem>
+                          ))}
                         </Select>
                       </FormControl>
                       <Button type="submit">Request Service</Button>

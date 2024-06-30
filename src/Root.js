@@ -10,7 +10,7 @@ import CustomerList from "./componants/CustomerList";
 import Header from "./componants/Header";
 import Footer from "./componants/Footer";
 import Customer from "./componants/Customer";
-import LoginForm from "./componants/LoginForm.js";
+import LoginForm from "./componants/LoginForm";
 
 function Root() {
   return (
