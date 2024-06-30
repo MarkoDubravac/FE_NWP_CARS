@@ -138,8 +138,8 @@ function Customer({ id }) {
             {user.cars.map((car, index) => (
               <ListItem key={index}>
                 <ListItemText
-                  primary={`${car.make} ${car.model}`}
-                  secondary={`Year: ${car.year}`}
+                  primary={`${car.carType} ${car.manufactureYear}`}
+                  secondary={`Registration Mark: ${car.registrationMark}`}
                 />
               </ListItem>
             ))}
