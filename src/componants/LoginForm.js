@@ -3,12 +3,14 @@ import { TextField, Button, Container, Typography, Box } from "@mui/material";
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import Avatar from "@mui/material/Avatar";
 import CssBaseline from "@mui/material/CssBaseline";
+import { useNavigate } from "react-router-dom";
 
 const LoginForm = () => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
   const [message, setMessage] = useState("");
+  const navigate = useNavigate()
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -23,7 +25,7 @@ const LoginForm = () => {
     };
 
     try {
-      const response = await fetch("/api/login", {
+      const response = await fetch("http://localhost:8080/api/login", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -35,6 +37,9 @@ const LoginForm = () => {
         const result = await response.text();
         setMessage(result);
         setError("");
+        if (result === "Login successful") {
+          navigate("/home");
+        }
       } else {
         setError("Login failed");
         setMessage("");
