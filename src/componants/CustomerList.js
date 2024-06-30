@@ -42,6 +42,7 @@ function CustomerList() {
   };
 
   const handleDelete = (id) => {
+    console.log(id);
     fetch(`http://localhost:8080/api/customers/delete/${id}`, {
       method: "DELETE",
     })
@@ -83,13 +84,10 @@ function CustomerList() {
               <li className="user-card-item">
                 <img src={userImage} alt="user" className="user-icon" />
                 <span className="user-name">{searchedUser.firstName}</span>
-                <Button onClick={() => handleDetails(searchedUser.id)}>
+                <Button onClick={() => handleDetails(searchId, searchedUser)}>
                   Details
                 </Button>
-                <Button
-                  color="error"
-                  onClick={() => handleDelete(searchedUser.id)}
-                >
+                <Button color="error" onClick={() => handleDelete(searchId)}>
                   Remove
                 </Button>
               </li>
@@ -104,7 +102,9 @@ function CustomerList() {
               <Card key={user.id} className="user-card">
                 <li className="user-card-item">
                   <img src={userImage} alt="user" className="user-icon" />
-                  <span className="user-name">{user.firstName}</span>
+                  <span className="user-name">
+                    {user.firstName} {user.lastName}
+                  </span>
                   <Button onClick={() => handleDetails(user.id)}>
                     Details
                   </Button>

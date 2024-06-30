@@ -4,7 +4,7 @@ import CustomerForm from "./CustomerForm";
 function App() {
   return (
     <div className="App">
-      <h1>Welcome to React</h1>
+      <h1>Welcome to Car Service</h1>
       <CustomerForm />
     </div>
   );

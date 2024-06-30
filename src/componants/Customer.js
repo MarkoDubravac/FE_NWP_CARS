@@ -1,14 +1,18 @@
 import {
+  Button,
   Card,
   CardContent,
+  FormControl,
   Grid,
+  InputLabel,
   List,
-  ListItem,
-  ListItemText,
+  MenuItem,
+  Select,
   TextField,
   Typography,
 } from "@mui/material";
 import React, { useState, useEffect } from "react";
+import carImage from "./carpng.png";
 
 function Customer({ id }) {
   const [user, setUser] = useState(null);
@@ -136,12 +140,35 @@ function Customer({ id }) {
           </Typography>
           <List>
             {user.cars.map((car, index) => (
-              <ListItem key={index}>
-                <ListItemText
-                  primary={`${car.carType} ${car.manufactureYear}`}
-                  secondary={`Registration Mark: ${car.registrationMark}`}
-                />
-              </ListItem>
+              <div>
+                <Card className="car-card">
+                  <li className="car-card-item">
+                    <img src={carImage} alt="car" className="car-icon" />
+                    <p className="car-name">
+                      {car.carType} - {car.manufactureYear} -{" "}
+                      {car.registrationMark}
+                    </p>
+                    <div className="car-service">
+                      <FormControl fullWidth>
+                        <InputLabel id="demo-simple-select-label">
+                          Services
+                        </InputLabel>
+                        <Select
+                          labelId="demo-simple-select-label"
+                          id="demo-simple-select"
+                          value={1}
+                          label="Services"
+                        >
+                          <MenuItem value={10}>Ten</MenuItem>
+                          <MenuItem value={20}>Twenty</MenuItem>
+                          <MenuItem value={30}>Thirty</MenuItem>
+                        </Select>
+                      </FormControl>
+                      <Button type="submit">Request Service</Button>
+                    </div>
+                  </li>
+                </Card>
+              </div>
             ))}
           </List>
         </CardContent>

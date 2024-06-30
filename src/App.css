@@ -111,3 +111,40 @@ body {
 button {
   margin-left: auto;
 }
+
+.car-card {
+  display: flex;
+  align-items: center;
+  padding: 10px;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  margin-bottom: 10px;
+  background-color: #f9f9f9;
+}
+
+.car-card-item {
+  display: flex;
+  align-items: center;
+  width: 100%;
+}
+
+.car-icon {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  margin-right: 10px;
+}
+
+.car-name {
+  flex-grow: 1;
+  font-size: 1.2em;
+  margin-right: 20px;
+}
+
+.car-service {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-left: 20px;
+  width: 50%;
+}
