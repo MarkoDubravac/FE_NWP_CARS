@@ -1,9 +1,15 @@
 import React from "react";
-import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
+import {
+  BrowserRouter as Router,
+  Route,
+  Routes,
+  useParams,
+} from "react-router-dom";
 import App from "./componants/App";
 import CustomerList from "./componants/CustomerList";
 import Header from "./componants/Header";
 import Footer from "./componants/Footer";
+import Customer from "./componants/Customer";
 
 function Root() {
   return (
@@ -14,12 +20,18 @@ function Root() {
           <Routes>
             <Route path="/" element={<App />} />
             <Route path="/users" element={<CustomerList />} />
+            <Route path="/users/:id" element={<CustomerWrapper />} />
           </Routes>
         </div>
         <Footer />
       </Router>
     </div>
   );
+}
+
+function CustomerWrapper() {
+  const { id } = useParams();
+  return <Customer id={id} />;
 }
 
 export default Root;
