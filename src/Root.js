@@ -10,6 +10,7 @@ import CustomerList from "./componants/CustomerList";
 import Header from "./componants/Header";
 import Footer from "./componants/Footer";
 import Customer from "./componants/Customer";
+import LoginForm from "./componants/LoginForm.js";
 
 function Root() {
   return (
@@ -18,7 +19,8 @@ function Root() {
         <Header pageTitle="Cars Service DRC" />
         <div className="main-content">
           <Routes>
-            <Route path="/" element={<App />} />
+            <Route path="/" element={<LoginForm />} />
+            <Route path="/home" element={<App />} />
             <Route path="/users" element={<CustomerList />} />
             <Route path="/users/:id" element={<CustomerWrapper />} />
           </Routes>
