@@ -11,7 +11,7 @@ export default function Header(props) {
               <a href="http://localhost:3000/">Home</a>
             </li>
             <li>
-              <a href="http://localhost:3000/users">Users</a>
+              <a href="http://localhost:3000/users">Clients</a>
             </li>
           </ul>
         </nav>

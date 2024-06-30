@@ -67,7 +67,7 @@ function CustomerList() {
 
   return (
     <div>
-      <h2>Users</h2>
+      <h2>Clients</h2>
       <Input
         type="text"
         placeholder="Search by ID"
@@ -98,7 +98,7 @@ function CustomerList() {
         </div>
       ) : (
         <div>
-          <h3>All Users:</h3>
+          <h3>All Clients:</h3>
           <ul>
             {users.map((user) => (
               <Card key={user.id} className="user-card">
