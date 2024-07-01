@@ -86,7 +86,7 @@ function CarForm({ customerId }) {
           manufactureYear: "",
           registrationMark: "",
           color: "",
-          clientId: customerId, // Reset to the initial customerId
+          clientId: customerId,
         });
       })
       .catch((error) => console.error("Error updating data:", error));
