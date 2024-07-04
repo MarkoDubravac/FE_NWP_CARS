@@ -10,14 +10,17 @@ export default function Header(props) {
         <h1 className="App-title">{props.pageTitle}</h1>
         {location.pathname !== "/" && (
           <nav>
-            <ul className="nav-links">
-              <li>
-                <a href="http://localhost:3000/home">Home</a>
-              </li>
-              <li>
-                <a href="http://localhost:3000/users">Clients</a>
-              </li>
-            </ul>
+              <ul className="nav-links">
+                  <li>
+                      <a href="http://localhost:3000/home">Home</a>
+                  </li>
+                  <li>
+                      <a href="http://localhost:3000/users">Clients</a>
+                  </li>
+                  <li>
+                      <a href="http://localhost:3000">Log out</a>
+                  </li>
+              </ul>
           </nav>
         )}
       </div>
