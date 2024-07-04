@@ -31,7 +31,7 @@ function CarServiceRequestForm({ clientId, carId, serviceId }) {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    if (serviceId) {
+    if (formData.id) {
       handleUpdate();
     } else {
       handleCreate();
