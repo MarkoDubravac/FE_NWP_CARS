@@ -1,3 +1,4 @@
+import React, { useState } from "react";
 import {
   Button,
   Card,
@@ -7,8 +8,9 @@ import {
   MenuItem,
   FormControl,
   InputLabel,
+  Snackbar,
+  Alert,
 } from "@mui/material";
-import React, { useState } from "react";
 
 function CarForm({ customerId }) {
   const [formData, setFormData] = useState({
@@ -20,12 +22,47 @@ function CarForm({ customerId }) {
     clientId: "",
   });
 
+  const [alertOpen, setAlertOpen] = useState(false);
+  const [alertMessage, setAlertMessage] = useState("");
+  const [alertSeverity, setAlertSeverity] = useState("error");
+
+  const formatRegistrationMark = (value) => {
+    const alphanumericValue = value.replace(/[^A-Z0-9]/gi, "");
+    let formattedValue = "";
+    if (alphanumericValue.length > 0) {
+      formattedValue += alphanumericValue.slice(0, 2).toUpperCase();
+    }
+    if (alphanumericValue.length > 2) {
+      formattedValue += " " + alphanumericValue.slice(2, 5);
+    }
+    if (alphanumericValue.length > 5) {
+      formattedValue += " " + alphanumericValue.slice(5, 7).toUpperCase();
+    }
+    return formattedValue;
+  };
+
+  const validateRegistrationMark = (value) => {
+    const pattern = /^[A-Z0-9]{2} \d{3} [A-Z0-9]{2}$/;
+    return pattern.test(value);
+  };
+
   const handleChange = (e) => {
     const { name, value } = e.target;
-    setFormData((prevData) => ({
-      ...prevData,
-      [name]: value,
-    }));
+
+    if (name === "registrationMark") {
+      const formattedValue = formatRegistrationMark(value);
+      const isValid = validateRegistrationMark(formattedValue);
+
+      setFormData((prevData) => ({
+        ...prevData,
+        [name]: formattedValue,
+      }));
+    } else {
+      setFormData((prevData) => ({
+        ...prevData,
+        [name]: value,
+      }));
+    }
   };
 
   const handleSubmit = (e) => {
@@ -45,9 +82,21 @@ function CarForm({ customerId }) {
       },
       body: JSON.stringify(formData),
     })
-      .then((response) => response.json())
+      .then((response) => {
+        if (!response.ok) {
+          return response.json().then((error) => {
+            setAlertMessage(error.message || "An unexpected error occurred");
+            setAlertSeverity("error");
+            setAlertOpen(true);
+            throw new Error(error.message);
+          });
+        }
+        return response.json();
+      })
       .then((data) => {
-        console.log("Successfully posted data:", data);
+        setAlertMessage("Car added successfully!");
+        setAlertSeverity("success");
+        setAlertOpen(true);
         setFormData({
           id: "",
           carType: "",
@@ -74,14 +123,20 @@ function CarForm({ customerId }) {
       .then((response) => {
         if (!response.ok) {
           return response.text().then((text) => {
+            setAlertMessage(text || "An unexpected error occurred");
+            setAlertSeverity("error");
+            setAlertOpen(true);
             throw new Error(text);
           });
         }
         return response.json();
       })
       .then((data) => {
-        console.log("Successfully updated data:", data);
+        setAlertMessage("Car updated successfully!");
+        setAlertSeverity("success");
+        setAlertOpen(true);
         setFormData({
+          id: "",
           carType: "",
           manufactureYear: "",
           registrationMark: "",
@@ -92,29 +147,32 @@ function CarForm({ customerId }) {
       .catch((error) => console.error("Error updating data:", error));
   };
 
+  const handleAlertClose = () => {
+    setAlertOpen(false);
+  };
+
   return (
     <Card sx={{ maxWidth: 600, margin: "0 auto", padding: 2 }}>
       <form onSubmit={handleSubmit}>
-        <div>
-          <FormControl>
-            <InputLabel id="carType-label">Car Type</InputLabel>
-            <Select
-              labelId="carType-label"
-              id="carType"
-              name="carType"
-              value={formData.carType}
-              onChange={handleChange}
-              required
-              style={{ width: "300px" }}
-            >
-              <MenuItem value="HYUNDAI">HYUNDAI</MenuItem>
-              <MenuItem value="BMW">BMW</MenuItem>
-              <MenuItem value="MERCEDES">MERCEDES</MenuItem>
-              <MenuItem value="RENAULT">RENAULT</MenuItem>
-            </Select>
-          </FormControl>
-        </div>
-        <div>
+        <FormControl fullWidth sx={{ maxWidth: 300, mt: 2, mb: 2 }}>
+          <InputLabel id="carType-label">Car Type</InputLabel>
+          <Select
+            labelId="carType-label"
+            id="carType"
+            name="carType"
+            value={formData.carType}
+            onChange={handleChange}
+            label="Car Type"
+            required
+          >
+            <MenuItem value="HYUNDAI">HYUNDAI</MenuItem>
+            <MenuItem value="BMW">BMW</MenuItem>
+            <MenuItem value="MERCEDES">MERCEDES</MenuItem>
+            <MenuItem value="RENAULT">RENAULT</MenuItem>
+          </Select>
+        </FormControl>
+
+        <div style={{ marginBottom: 16 }}>
           <FormLabel>Car ID:</FormLabel>
           <Input
             type="text"
@@ -124,7 +182,8 @@ function CarForm({ customerId }) {
             onChange={handleChange}
           />
         </div>
-        <div>
+
+        <div style={{ marginBottom: 16 }}>
           <FormLabel>Manufacture Year:</FormLabel>
           <Input
             type="number"
@@ -134,7 +193,8 @@ function CarForm({ customerId }) {
             required
           />
         </div>
-        <div>
+
+        <div style={{ marginBottom: 16 }}>
           <FormLabel>Registration Mark:</FormLabel>
           <Input
             type="text"
@@ -145,18 +205,19 @@ function CarForm({ customerId }) {
             required
           />
         </div>
-        <div>
+
+        <div style={{ marginBottom: 16 }}>
           <FormLabel>Color:</FormLabel>
           <Input
             type="text"
             name="color"
-            placeholder="Red"
             value={formData.color}
             onChange={handleChange}
             required
           />
         </div>
-        <div>
+
+        <div style={{ marginBottom: 16 }}>
           <FormLabel>Customer ID:</FormLabel>
           <Input
             type="text"
@@ -167,6 +228,7 @@ function CarForm({ customerId }) {
             required
           />
         </div>
+
         <div
           style={{
             display: "flex",
@@ -179,6 +241,19 @@ function CarForm({ customerId }) {
           </Button>
         </div>
       </form>
+      <Snackbar
+        open={alertOpen}
+        autoHideDuration={6000}
+        onClose={handleAlertClose}
+      >
+        <Alert
+          onClose={handleAlertClose}
+          severity={alertSeverity}
+          sx={{ width: "100%" }}
+        >
+          {alertMessage}
+        </Alert>
+      </Snackbar>
     </Card>
   );
 }

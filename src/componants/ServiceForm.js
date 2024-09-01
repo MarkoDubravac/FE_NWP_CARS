@@ -6,6 +6,8 @@ import {
   Input,
   Select,
   MenuItem,
+  Snackbar,
+  Alert,
 } from "@mui/material";
 
 function CarServiceRequestForm({ clientId, carId, serviceId }) {
@@ -21,11 +23,15 @@ function CarServiceRequestForm({ clientId, carId, serviceId }) {
     carId: "",
   });
 
+  const [alertOpen, setAlertOpen] = useState(false);
+  const [alertMessage, setAlertMessage] = useState("");
+  const [alertSeverity, setAlertSeverity] = useState("error"); // Can be 'error', 'warning', 'info', 'success'
+
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData((prevData) => ({
       ...prevData,
-      [name]: value,
+      [name]: name === "isPaid" ? value === "true" : value,
     }));
   };
 
@@ -49,9 +55,21 @@ function CarServiceRequestForm({ clientId, carId, serviceId }) {
         body: JSON.stringify(formData),
       }
     )
-      .then((response) => response.json())
+      .then((response) => {
+        if (!response.ok) {
+          return response.json().then((error) => {
+            setAlertMessage(error.message || "An unexpected error occurred");
+            setAlertSeverity("error");
+            setAlertOpen(true);
+            throw new Error(error.message);
+          });
+        }
+        return response.json();
+      })
       .then((data) => {
-        console.log("Successfully posted data:", data);
+        setAlertMessage("Service request added successfully!");
+        setAlertSeverity("success");
+        setAlertOpen(true);
         setFormData({
           id: "",
           dateOfService: "",
@@ -81,13 +99,18 @@ function CarServiceRequestForm({ clientId, carId, serviceId }) {
       .then((response) => {
         if (!response.ok) {
           return response.text().then((text) => {
+            setAlertMessage(text || "An unexpected error occurred");
+            setAlertSeverity("error");
+            setAlertOpen(true);
             throw new Error(text);
           });
         }
         return response.json();
       })
       .then((data) => {
-        console.log("Successfully updated data:", data);
+        setAlertMessage("Service request updated successfully!");
+        setAlertSeverity("success");
+        setAlertOpen(true);
         setFormData({
           id: "",
           dateOfService: "",
@@ -103,11 +126,15 @@ function CarServiceRequestForm({ clientId, carId, serviceId }) {
       .catch((error) => console.error("Error updating data:", error));
   };
 
+  const handleAlertClose = () => {
+    setAlertOpen(false);
+  };
+
   return (
     <Card sx={{ maxWidth: 600, margin: "0 auto", padding: 2 }}>
       <form onSubmit={handleSubmit}>
-        <div>
-          <FormLabel>CarService ID:</FormLabel>
+        <div style={{ marginBottom: 16 }}>
+          <FormLabel>Service ID:</FormLabel>
           <Input
             type="text"
             name="id"
@@ -116,7 +143,7 @@ function CarServiceRequestForm({ clientId, carId, serviceId }) {
             onChange={handleChange}
           />
         </div>
-        <div>
+        <div style={{ marginBottom: 16 }}>
           <FormLabel>Date of Service:</FormLabel>
           <Input
             type="date"
@@ -126,7 +153,7 @@ function CarServiceRequestForm({ clientId, carId, serviceId }) {
             required
           />
         </div>
-        <div>
+        <div style={{ marginBottom: 16 }}>
           <FormLabel>Worker First Name:</FormLabel>
           <Input
             type="text"
@@ -136,7 +163,7 @@ function CarServiceRequestForm({ clientId, carId, serviceId }) {
             required
           />
         </div>
-        <div>
+        <div style={{ marginBottom: 16 }}>
           <FormLabel>Worker Last Name:</FormLabel>
           <Input
             type="text"
@@ -145,7 +172,7 @@ function CarServiceRequestForm({ clientId, carId, serviceId }) {
             onChange={handleChange}
           />
         </div>
-        <div>
+        <div style={{ marginBottom: 16 }}>
           <FormLabel>Work Description:</FormLabel>
           <Input
             type="text"
@@ -155,7 +182,7 @@ function CarServiceRequestForm({ clientId, carId, serviceId }) {
             required
           />
         </div>
-        <div>
+        <div style={{ marginBottom: 16 }}>
           <FormLabel>Price:</FormLabel>
           <Input
             type="number"
@@ -165,7 +192,7 @@ function CarServiceRequestForm({ clientId, carId, serviceId }) {
             required
           />
         </div>
-        <div>
+        <div style={{ marginBottom: 16 }}>
           <FormLabel>Payment Status:</FormLabel>
           <Select
             value={formData.isPaid}
@@ -177,7 +204,7 @@ function CarServiceRequestForm({ clientId, carId, serviceId }) {
             <MenuItem value={false}>Not Paid</MenuItem>
           </Select>
         </div>
-        <div>
+        <div style={{ marginBottom: 16 }}>
           <FormLabel>Customer ID:</FormLabel>
           <Input
             type="text"
@@ -188,7 +215,7 @@ function CarServiceRequestForm({ clientId, carId, serviceId }) {
             required
           />
         </div>
-        <div>
+        <div style={{ marginBottom: 16 }}>
           <FormLabel>Car ID:</FormLabel>
           <Input
             type="text"
@@ -211,6 +238,19 @@ function CarServiceRequestForm({ clientId, carId, serviceId }) {
           </Button>
         </div>
       </form>
+      <Snackbar
+        open={alertOpen}
+        autoHideDuration={6000}
+        onClose={handleAlertClose}
+      >
+        <Alert
+          onClose={handleAlertClose}
+          severity={alertSeverity}
+          sx={{ width: "100%" }}
+        >
+          {alertMessage}
+        </Alert>
+      </Snackbar>
     </Card>
   );
 }

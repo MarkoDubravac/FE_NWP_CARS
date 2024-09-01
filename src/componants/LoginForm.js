@@ -38,6 +38,7 @@ const LoginForm = () => {
         setMessage(result);
         setError("");
         if (result === "Login successful") {
+          localStorage.setItem("isLoggedIn", "true");
           navigate("/home");
         }
       } else {

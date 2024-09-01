@@ -11,6 +11,7 @@ import Header from "./componants/Header";
 import Footer from "./componants/Footer";
 import Customer from "./componants/Customer";
 import LoginForm from "./componants/LoginForm";
+import PrivateRoute from "./componants/PrivateRoute";
 
 function Root() {
   return (
@@ -20,9 +21,11 @@ function Root() {
         <div className="main-content">
           <Routes>
             <Route path="/" element={<LoginForm />} />
-            <Route path="/home" element={<App />} />
-            <Route path="/users" element={<CustomerList />} />
-            <Route path="/users/:id" element={<CustomerWrapper />} />
+            <Route element={<PrivateRoute />}>
+              <Route path="/home" element={<App />} />
+              <Route path="/users" element={<CustomerList />} />
+              <Route path="/users/:id" element={<CustomerWrapper />} />
+            </Route>
           </Routes>
         </div>
         <Footer />
